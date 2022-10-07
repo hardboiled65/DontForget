@@ -72,6 +72,28 @@ int32_t df_linked_list_at(df_linked_list_t *list, uint32_t index)
     return it->value;
 }
 
+void df_linked_list_insert(df_linked_list_t *list, uint32_t index, int32_t val)
+{
+    df_linked_list_node_t *it = list->first;
+    df_linked_list_node_t *new_node = NULL;
+
+    new_node = (df_linked_list_node_t*)malloc(sizeof(df_linked_list_node_t));
+    new_node->value = val;
+
+    if (index == 0) {
+        new_node->next = list->first;
+        list->first = new_node;
+    } else {
+        for (uint32_t i = 0; i < index - 1; ++i) {
+            it = it->next;
+        }
+        new_node->next = it->next;
+        it->next = new_node;
+    }
+
+    list->length += 1;
+}
+
 static void print_function(df_linked_list_node_t *node)
 {
     printf("%d>", node->value);
@@ -98,6 +120,11 @@ int main(int argc, char *argv[])
     // At.
     int32_t val_at_3 = df_linked_list_at(&list, 3);
     assert(val_at_3 == 8);
+
+    // Insert values.
+    df_linked_list_insert(&list, 0, 100);
+    df_linked_list_insert(&list, 2, 200);
+    df_linked_list_for_each(&list, print_function);
 
     return 0;
 }
