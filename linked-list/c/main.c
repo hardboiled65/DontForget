@@ -94,6 +94,29 @@ void df_linked_list_insert(df_linked_list_t *list, uint32_t index, int32_t val)
     list->length += 1;
 }
 
+int32_t df_linked_list_remove(df_linked_list_t *list, uint32_t index)
+{
+    df_linked_list_node_t *it = list->first;
+    df_linked_list_node_t *next = (it != NULL) ? it->next : NULL;
+    int32_t val;
+
+    if (index == 0) {
+        val = list->first->value;
+        free(list->first);
+        list->first = next;
+    } else {
+        for (uint32_t i = 0; i < index - 1; ++i) {
+            it = it->next;
+            next = it->next;
+        }
+        val = next->value;
+        it->next = next->next;
+        free(next);
+    }
+
+    return val;
+}
+
 static void print_function(df_linked_list_node_t *node)
 {
     printf("%d>", node->value);
@@ -124,6 +147,13 @@ int main(int argc, char *argv[])
     // Insert values.
     df_linked_list_insert(&list, 0, 100);
     df_linked_list_insert(&list, 2, 200);
+    df_linked_list_for_each(&list, print_function);
+
+    // Remove values.
+    int32_t removed = df_linked_list_remove(&list, 1);
+    assert(removed == 2);
+    removed = df_linked_list_remove(&list, 6);
+    assert(removed == 12);
     df_linked_list_for_each(&list, print_function);
 
     return 0;
