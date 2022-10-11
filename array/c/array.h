@@ -54,3 +54,8 @@ void df_array_print(df_array_t *array)
     printf("]\n");
 }
 
+void df_array_free(df_array_t *array)
+{
+    free(array->values);
+}
+

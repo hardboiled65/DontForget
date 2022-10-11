@@ -38,5 +38,8 @@ int main(int argc, char *argv[])
 
     df_array_print(&array);
 
+    // Free.
+    df_array_free(&array);
+
     return 0;
 }
