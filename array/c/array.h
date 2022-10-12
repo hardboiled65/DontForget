@@ -37,6 +37,8 @@ int32_t df_array_at(df_array_t *array, uint32_t index)
 
 void df_array_swap(df_array_t *array, uint32_t index1, uint32_t index2)
 {
+    assert(index1 < array->length && index2 < array->length);
+
     int32_t tmp = array->values[index1];
     array->values[index1] = array->values[index2];
     array->values[index2] = tmp;
