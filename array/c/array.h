@@ -25,6 +25,8 @@ df_array_t df_array_new(uint32_t length)
 
 void df_array_set(df_array_t *array, uint32_t index, int32_t value)
 {
+    assert(index < array->length);
+
     array->values[index] = value;
 }
 
