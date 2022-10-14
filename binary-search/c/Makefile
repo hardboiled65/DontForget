@@ -1,0 +1,2 @@
+default:
+	$(CC) main.c
